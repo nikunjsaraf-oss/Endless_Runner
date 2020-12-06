@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float laneDistance = 2.5f;
     [SerializeField] TMP_Text scoreText = null;
     [SerializeField] TMP_Text highScoreText = null;
+    [SerializeField] GameObject currentScoreDetails = null;
     [SerializeField] ScoreCounter ScoreCounter = null;
 
 
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
     private void HandleDeath()
     {
         FindObjectOfType<AudioManager>().Play("Game Over");
+        currentScoreDetails.SetActive(false);
         float score = ScoreCounter.GetScore();
         if (score > highScore)
         {

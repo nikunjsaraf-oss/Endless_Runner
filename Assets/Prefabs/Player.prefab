@@ -52,6 +52,9 @@ MonoBehaviour:
   gravity: -20
   maxSpeed: 20
   laneDistance: 2
+  scoreText: {fileID: 0}
+  highScoreText: {fileID: 0}
+  ScoreCounter: {fileID: 8672055014301828442}
 --- !u!114 &8672055014301828442
 MonoBehaviour:
   m_ObjectHideFlags: 0
