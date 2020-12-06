@@ -8,8 +8,15 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] int maxDifficulty = 10;
     [SerializeField] int scoreToNextLevel = 20;
 
+
     float scoreCounter = 0;
     int difficulty = 1;
+
+    public float GetScore()
+    {
+        return scoreCounter;
+    }
+    
 
     private void Start()
     {

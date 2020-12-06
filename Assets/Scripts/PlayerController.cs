@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float speed = 20;
     [SerializeField] float jumpForce = 10;
     [SerializeField] float gravity = -20;
     [SerializeField] float maxSpeed = 20;
+    [SerializeField] float laneDistance = 2.5f;
+    [SerializeField] TMP_Text scoreText = null;
+    [SerializeField] TMP_Text highScoreText = null;
+    [SerializeField] ScoreCounter ScoreCounter = null;
 
+
+    int laneToSwitch = 1;
+    float highScore = 0;
 
     CharacterController controller;
     Vector3 movePlayer;
     Animator animator;
 
-    private int laneToSwitch = 1;
-    public float laneDistance = 2.5f;
+
+
 
     private void Awake()
     {
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        highScore = PlayerPrefs.GetInt("High Score", (int)highScore);
     }
 
     private void Update()
@@ -103,8 +109,21 @@ public class PlayerController : MonoBehaviour
     {
         if (hit.transform.tag == "Obstacle")
         {
-            FindObjectOfType<AudioManager>().Play("Game Over");
-            PlayerManager.isGameOver = true;
+            HandleDeath();
         }
+    }
+
+    private void HandleDeath()
+    {
+        FindObjectOfType<AudioManager>().Play("Game Over");
+        float score = ScoreCounter.GetScore();
+        if (score > highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt("High Score", (int)highScore);
+        }
+        scoreText.text = $"Score: {(int)score}";
+        highScoreText.text = $"Highscore: {(int)highScore}";
+        PlayerManager.isGameOver = true;
     }
 }
